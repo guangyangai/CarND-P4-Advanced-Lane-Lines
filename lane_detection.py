@@ -5,16 +5,12 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import pickle
 import glob
+
+from moviepy.editor import VideoFileClip
+from IPython.display import HTML
 from abc import ABCMeta
 
-thresh=(20, 100)
-mag_thresh=(30, 100)
-angle_thesh=(0.7, 1.3)
-hls_thresh=(190, 255)
-sobel_kernel = 15
-ksize =3 
-
-
+#TODO: PUT ALL CONSTANTS TO A CLASS
 class Line(object):
     __metaclass__ = ABCMeta
 
@@ -352,44 +348,50 @@ class Line(object):
         frame_undistored = self.undistort(frame)
         #apply perspective transform
         frame_warped = self.apply_perspective_transform(frame_undistored)
-        #apply filter and smoothing
-        lane_filtered = self.combine_filters(frame_warped)
-        lane_smoothed = self.apply_smoothing(lane_filtered)
-        #find left lane and right lane
-        left_fit, right_fit, out_img, offset_pixel = self.find_line_fit_and_car_offset(lane_smoothed)
-        left_fitx, right_fitx, ploty = self.get_fit_xy(lane_smoothed, left_fit, right_fit)
-        frame_w_lane = self.project_back(lane_smoothed, frame, left_fitx, right_fitx, ploty, Minv)
-        left_curverad, right_curverad, offset = self.calculate_curvature_and_vehicle_position(ploty, left_fitx, right_fitx, offset_pixel)
-        frame_w_lane_and_info = self.add_curvature_and_offset_info(frame_w_lane, left_curverad, right_curverad, offset)
+        if not self.recent_xfitted:
+            #apply filter and smoothing
+            lane_filtered = self.combine_filters(frame_warped)
+            lane_smoothed = self.apply_smoothing(lane_filtered)
+            #find left lane and right lane
+            left_fit, right_fit, out_img, offset_pixel = self.find_line_fit_and_car_offset(lane_smoothed)
+            left_fitx, right_fitx, ploty = self.get_fit_xy(lane_smoothed, left_fit, right_fit)
+            frame_w_lane = self.project_back(lane_smoothed, frame, left_fitx, right_fitx, ploty, Minv)
+            left_curverad, right_curverad, offset = self.calculate_curvature_and_vehicle_position(ploty, left_fitx, right_fitx, offset_pixel)
+            frame_w_lane_and_info = self.add_curvature_and_offset_info(frame_w_lane, left_curverad, right_curverad, offset)
+        else:
+            frame_w_lane_and_info = self.find_line_fit_and_car_offset_based_on_previous_frame()
         return frame_w_lane_and_info
 
-    def sanity_check(margin):
+    def sanity_check(self, margin):
         pass
 
-    def look_ahead_filter(margin):
+    def look_ahead_filter(self, margin):
         """ Search for the new line within +/- some margin around the old line center"""
         pass
 
-    def reset():
+    def reset(self):
         """keep the previous position from prior frame for bad or difficult frame"""
         pass
 
-    def smoothing():
+    def smoothing(self):
         """"""
         pass
 
-    def detect_lane_for_first_frame(frame):
-        """pipeline to detect lane for first frame"""
+    def find_line_fit_and_car_offset_based_on_previous_frame(self):
+        """find lane based on previous lane"""
         pass
 
 
-right_lane = Line()
-left_lane = Line()
+def process_image(img):
+    lane = Line()
+    #use class method to find lane
+    img_with_lane = lane.detect_lane_from_frame(img)
+    return img_with_lane
 
-for frame in frames:
-    right_lane_marked = right_lane.detect_lane()
-    left_lane_marked = left_lane.detect_lane()
-    frame_marked = mark_frame(left_lane_marked, right_lane_marked, frame)
+
+clip = VideoFileClip("project_video.mp4")
+clip_annotated = clip.fl_image(process_image)
+clip_annotated.write_videofile("project_video_out.mp4", audio=False)
 
 
 

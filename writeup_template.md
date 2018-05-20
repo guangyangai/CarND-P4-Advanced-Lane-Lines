@@ -19,14 +19,14 @@ The goals / steps of this project are the following:
 
 [image1]: ./output_images/distortion1.png "Camera Calibration"
 [image2]: ./output_images/undistorted.png "Undistorted Image"
-[image3]: ./output_images/color_mask.jpg "Color Mask"
-[image4]: ./output_images/hls_threshold.jpg "HLS Space"
-[image5]: ./output_images/sobel_on_l_s_channel.jpg "Sobel Filter"
-[image6]: ./output_images/combine_filter_and_smoothing.jpg "Combine Filter"
-[image7]: ./output_images/perspective_transform.jpg "Perspective Transform"
-[image8]: ./output_images/histogram.jpg "Histogram"
-[image9]: ./output_images/lane_fitting.jpg "Polynomial Fitting"
-[image10]: ./output_images/project_back.jpg "Lane Detection"
+[image3]: ./output_images/color_mask.png "Color Mask"
+[image4]: ./output_images/hls_threshold.png "HLS Space"
+[image5]: ./output_images/sobel_on_l_s_channel.png "Sobel Filter"
+[image6]: ./output_images/combine_filter_and_smoothing.png "Combine Filter"
+[image7]: ./output_images/perspective_transform.pnd "Perspective Transform"
+[image8]: ./output_images/histogram.png "Histogram"
+[image9]: ./output_images/lane_fitting.png "Polynomial Fitting"
+[image10]: ./output_images/project_back.png "Lane Detection"
 [video1]: ./project_video_out_complete.mp4 "Video"
 
 
