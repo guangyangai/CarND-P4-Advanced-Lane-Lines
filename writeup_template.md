@@ -23,7 +23,7 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/hls_threshold.png "HLS Space"
 [image5]: ./output_images/sobel_on_l_s_channel.png "Sobel Filter"
 [image6]: ./output_images/combine_filter_and_smoothing.png "Combine Filter"
-[image7]: ./output_images/perspective_transform.pnd "Perspective Transform"
+[image7]: ./output_images/perspective_transform.png "Perspective Transform"
 [image8]: ./output_images/histogram.png "Histogram"
 [image9]: ./output_images/lane_fitting.png "Polynomial Fitting"
 [image10]: ./output_images/project_back.png "Lane Detection"
